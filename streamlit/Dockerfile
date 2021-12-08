@@ -1,0 +1,10 @@
+FROM python:3.8-slim
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE ${STREAMLIT_SERVER_PORT}
+
+CMD ["streamlit", "run", "main.py"]

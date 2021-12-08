@@ -1,0 +1,6 @@
+streamlit
+numpy
+pandas
+transformers
+iso-639
+torch

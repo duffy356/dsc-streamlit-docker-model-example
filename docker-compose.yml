@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  streamlit:
+    build: streamlit
+    image: duffy356/streamlit_model_example_dsc_mod5
+    ports:
+      - 39005:${STREAMLIT_SERVER_PORT:-80}
+    environment:
+      - STREAMLIT_SERVER_PORT=${STREAMLIT_SERVER_PORT:-80}
