@@ -12,9 +12,16 @@ Execute `download_models.sh` and download the pretrained model files from huggin
 
 This app uses the model from https://huggingface.co/papluca/xlm-roberta-base-language-detection
 
+### Second step: create venv
+
+Create a virutal env and install the dependencies from `requirements.txt` file
+
 ### Start app
 
 Then open the folder streamlit `streamlit` and run the command `streamlit run main.py`
 
 or execute `docker-compose up` in root of this repo and start the container
 
+## Use Image from Dockerhub
+
+https://hub.docker.com/repository/docker/duffy356/streamlit_model_example_dsc_mod5
