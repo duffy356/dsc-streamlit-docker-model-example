@@ -1,13 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build and Deploy
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -16,7 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-and-deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,12 +23,29 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Docker Login
+        uses: docker/login-action@v1.10.0
+        with:
+          # Username used to log against the Docker registry
+          username:  duffy356
+          # Password or personal access token used to log against the Docker registry
+          password:  ${{ secrets.dockerhub_password }}
+          # Log out from the Docker registry at the end of a job
+          logout: true
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: index.docker.io/duffy356/streamlit_model_example_dsc_mod5:${{ github.sha }}
+          file: ./Dockerfile
+
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          # Name of the Azure Web App
+          app-name: ds20m005-style-streamlit
+          # Applies to Web Apps(Windows and Linux) and Web App Containers(linux). Multi container scenario not supported. Publish profile (*.publishsettings) file contents with Web Deploy secrets
+          publish-profile: ${{ secrets.publish_profile }}
+          # Applies to Web App Containers only: Specify the fully qualified container image(s) name. For example, 'myregistry.azurecr.io/nginx:latest' or 'python:3.7.2-alpine/'. For multi-container scenario multiple container image names can be provided (multi-line separated)
+          images: index.docker.io/duffy356/streamlit_model_example_dsc_mod5:${{ github.sha }}
