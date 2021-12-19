@@ -4,7 +4,7 @@ from LanguageDetector import LanguageDetector
 language_detector = LanguageDetector()
 
 st.title("Language detect web app")
-
+st.subheader("This is a build pipeline test!")
 user_input = st.text_area("Enter a text that should be checked", "This is an example text.")
 
 if user_input:
