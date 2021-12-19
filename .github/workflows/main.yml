@@ -38,7 +38,7 @@ jobs:
         with:
           push: true
           tags: index.docker.io/duffy356/streamlit_model_example_dsc_mod5:${{ github.sha }}
-          file: ./Dockerfile
+          file: ./streamlit/Dockerfile
 
       - name: Azure WebApp
         uses: Azure/webapps-deploy@v2
