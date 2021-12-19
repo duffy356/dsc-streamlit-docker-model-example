@@ -2,3 +2,8 @@
 models/
 /.idea/
 /venv/
+style-transfer/
+*.png
+*.jpg
+storage/
+env/
